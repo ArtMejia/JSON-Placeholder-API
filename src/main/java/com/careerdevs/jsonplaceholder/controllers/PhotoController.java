@@ -1,6 +1,6 @@
 package com.careerdevs.jsonplaceholder.controllers;
 
-import com.careerdevs.jsonplaceholder.models.UserModel;
+import com.careerdevs.jsonplaceholder.models.PhotoModel;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -10,20 +10,19 @@ import org.springframework.web.client.HttpClientErrorException;
 import org.springframework.web.client.RestTemplate;
 
 @RestController
-@RequestMapping ("/api/users")
-public class UserController {
+@RequestMapping("/api/photos")
+public class PhotoController {
 
-    private final String usersEndpoint = "https://jsonplaceholder.typicode.com/users";
+    private final String photosEndPoint = "https://jsonplaceholder.typicode.com/photos";
 
     @GetMapping("/all")
-    public ResponseEntity<?> getAllUsers (RestTemplate restTemplate) {
+    public ResponseEntity<?> getAllPhotos (RestTemplate restTemplate) {
         try {
-            UserModel[] response = restTemplate.getForObject(usersEndpoint, UserModel[].class);
+            PhotoModel[] response = restTemplate.getForObject(photosEndPoint, PhotoModel[].class);
 
             for (int i = 0; i < response.length; i++) {
-                UserModel user = response[i];
-                System.out.println("Lat: " + user.getAddress().getGeo().getLat());
-                System.out.println("Lng: " + user.getAddress().getGeo().getLng() + "\n");
+                PhotoModel user = response[i];
+                System.out.println(user.getUrl());
             }
 
             return ResponseEntity.ok(response);
@@ -37,17 +36,17 @@ public class UserController {
     }
 
     @GetMapping("/id/{id}")
-    public ResponseEntity<?> getUserById (RestTemplate restTemplate, @PathVariable String id) {
+    public ResponseEntity<?> getPhotoById (RestTemplate restTemplate, @PathVariable String id) {
         try {
 
             // throws NumberFormatException if id is not an int
             Integer.parseInt(id);
 
-            System.out.println("Getting user with ID " + id);
+            System.out.println("Getting photo with ID " + id);
 
-            String url = usersEndpoint + "/" + id;
+            String url = photosEndPoint + "/" + id;
 
-            UserModel response = restTemplate.getForObject(url, UserModel.class);
+            PhotoModel response = restTemplate.getForObject(url, PhotoModel.class);
 
             return ResponseEntity.ok(response);
 
@@ -55,7 +54,7 @@ public class UserController {
             return ResponseEntity.status(400).body("ID " + id + ", is not a valid ID. Must be a whole number");
 
         } catch (HttpClientErrorException.NotFound e) {
-            return ResponseEntity.status(404).body("User Not Found With ID: " + id);
+            return ResponseEntity.status(404).body("Photo Not Found With ID: " + id);
 
         } catch (Exception e) {
             System.out.println(e.getClass());
