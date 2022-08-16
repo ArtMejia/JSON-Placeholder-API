@@ -54,6 +54,7 @@ public class UserModel {
     private UserAddress address;
 
     public class UserAddress {
+
         private String street;
         private String suite;
         private String city;
@@ -80,17 +81,18 @@ public class UserModel {
             return geo;
         }
 
-        public class UserGeo {
-            private String lat;
-            private String lng;
+            public class UserGeo {
 
-            public String getLat() {
-                return lat;
-            }
+                private String lat;
+                private String lng;
 
-            public String getLng() {
-                return lng;
-            }
+                public String getLat() {
+                    return lat;
+                }
+
+                public String getLng() {
+                    return lng;
+                }
         }
     }
 
