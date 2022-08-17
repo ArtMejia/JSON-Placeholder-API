@@ -20,10 +20,10 @@ public class AlbumController {
         try {
             AlbumModel[] response = restTemplate.getForObject(albumsEndPoint, AlbumModel[].class);
 
-            for (int i = 0; i < response.length; i++) {
-                AlbumModel user = response[i];
-                System.out.println(user.getTitle());
-            }
+//            for (int i = 0; i < response.length; i++) {
+//                AlbumModel user = response[i];
+//                System.out.println(user.getTitle());
+//            }
 
             return ResponseEntity.ok(response);
 

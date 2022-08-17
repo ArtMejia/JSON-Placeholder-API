@@ -20,10 +20,10 @@ public class CommentController {
         CommentModel[] response = restTemplate.getForObject(commentEndPoint, CommentModel[].class);
         try {
 
-            for (int i = 0; i < response.length; i++) {
-                CommentModel user = response[i];
-                System.out.println(user.getId());
-            }
+//            for (int i = 0; i < response.length; i++) {
+//                CommentModel user = response[i];
+//                System.out.println(user.getId());
+//            }
 
             return ResponseEntity.ok(response);
         } catch (Exception e) {

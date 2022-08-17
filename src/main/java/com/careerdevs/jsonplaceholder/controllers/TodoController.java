@@ -20,10 +20,10 @@ public class TodoController {
         try {
             TodoModel[] response = restTemplate.getForObject(todoEndPoint, TodoModel[].class);
 
-            for (int i = 0; i < response.length; i++) {
-                TodoModel user = response[i];
-                System.out.println(user.isCompleted());
-            }
+//            for (int i = 0; i < response.length; i++) {
+//                TodoModel user = response[i];
+//                System.out.println(user.isCompleted());
+//            }
 
             return ResponseEntity.ok(response);
 

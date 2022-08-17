@@ -20,10 +20,10 @@ public class PhotoController {
         try {
             PhotoModel[] response = restTemplate.getForObject(photosEndPoint, PhotoModel[].class);
 
-            for (int i = 0; i < response.length; i++) {
-                PhotoModel user = response[i];
-                System.out.println(user.getUrl());
-            }
+//            for (int i = 0; i < response.length; i++) {
+//                PhotoModel user = response[i];
+//                System.out.println(user.getUrl());
+//            }
 
             return ResponseEntity.ok(response);
 

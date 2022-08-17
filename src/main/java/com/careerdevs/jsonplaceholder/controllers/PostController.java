@@ -20,10 +20,10 @@ public class PostController {
         try {
             PostModel[] response = restTemplate.getForObject(postsEndpoint, PostModel[].class);
 
-            for (int i = 0; i < response.length; i++) {
-                PostModel user = response[i];
-                System.out.println(user.getId());
-            }
+//            for (int i = 0; i < response.length; i++) {
+//                PostModel user = response[i];
+//                System.out.println(user.getId());
+//            }
 
             return ResponseEntity.ok(response);
 
