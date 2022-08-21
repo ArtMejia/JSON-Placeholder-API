@@ -1,7 +1,8 @@
 package com.careerdevs.jsonplaceholder.controllers;
 
 import com.careerdevs.jsonplaceholder.models.UserModel;
-import org.apache.catalina.User;
+import org.springframework.http.HttpEntity;
+import org.springframework.http.HttpMethod;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.client.HttpClientErrorException;
@@ -11,26 +12,22 @@ import org.springframework.web.client.RestTemplate;
 @RequestMapping ("/api/users")
 public class UserController {
 
-    private final String usersEndpoint = "https://jsonplaceholder.typicode.com/users";
+    private final String jsonPHUsersEndpoint = "https://jsonplaceholder.typicode.com/users";
 
     @GetMapping("/all")
     public ResponseEntity<?> getAllUsers (RestTemplate restTemplate) {
         try {
-            UserModel[] response = restTemplate.getForObject(usersEndpoint, UserModel[].class);
-
+            UserModel[] response = restTemplate.getForObject(jsonPHUsersEndpoint, UserModel[].class);
             for (int i = 0; i < response.length; i++) {
                 UserModel user = response[i];
                 System.out.println(user.getName());
             }
-
             return ResponseEntity.ok(response);
-
         } catch (Exception e) {
             System.out.println(e.getClass());
             System.out.println(e.getMessage());
             return ResponseEntity.internalServerError().body(e.getMessage());
         }
-
     }
 
     @GetMapping("/id/{id}")
@@ -40,13 +37,13 @@ public class UserController {
             // throws NumberFormatException if id is not an int
             Integer.parseInt(id);
 
-            System.out.println("Getting user with ID " + id);
+            System.out.println("Getting User With ID: " + id);
 
-            String url = usersEndpoint + "/" + id;
+            String url = jsonPHUsersEndpoint + "/" + id;
 
             UserModel response = restTemplate.getForObject(url, UserModel.class);
 
-            System.out.println(response.getName());
+            System.out.println(response);
 
             return ResponseEntity.ok(response);
 
@@ -61,7 +58,6 @@ public class UserController {
             System.out.println(e.getMessage());
             return ResponseEntity.internalServerError().body(e.getMessage());
         }
-
     }
 
     @DeleteMapping("/id/{id}")
@@ -71,15 +67,15 @@ public class UserController {
             // throws NumberFormatException if id is not an int
             Integer.parseInt(id);
 
-            System.out.println("Getting user with ID " + id);
+            System.out.println("Getting User With ID: " + id);
 
-            String url = usersEndpoint + "/" + id;
+            String url = jsonPHUsersEndpoint + "/" + id;
 
-           restTemplate.getForObject(url, UserModel.class);
+            restTemplate.getForObject(url, UserModel.class);
 
             restTemplate.delete(url);
 
-            return ResponseEntity.ok("User with ID: " + id + " has been deleted");
+            return ResponseEntity.ok("User with ID: " + id + " has been deleted.");
 
         } catch (NumberFormatException e) {
             return ResponseEntity.status(400).body("ID " + id + ", is not a valid ID. Must be a whole number");
@@ -101,34 +97,35 @@ public class UserController {
 
             //TODO: User data validation
 
-            String url = usersEndpoint;
-
-            UserModel createdUser = restTemplate.postForObject(url, newUser, UserModel.class);
+            UserModel createdUser = restTemplate.postForObject(jsonPHUsersEndpoint, newUser, UserModel.class);
 
             return ResponseEntity.ok(createdUser);
 
-
-            } catch (Exception e) {
+        } catch (Exception e) {
             System.out.println(e.getClass());
             System.out.println(e.getMessage());
             return ResponseEntity.internalServerError().body(e.getMessage());
-            }
-
+        }
     }
 
-
+    // PUT localhost:8080/api/users
     @PutMapping("/id/{id}")
-    public ResponseEntity<?> updateUser (RestTemplate restTemplate, @RequestBody UserModel updateUserData, @PathVariable String id) {
+    public ResponseEntity<?> updateUser (RestTemplate restTemplate, @RequestBody UserModel updateUserData,
+                                         @PathVariable String id) {
         try {
+
+            // throws NumberFormatException if id is not an int
             Integer.parseInt(id);
 
+            String url = jsonPHUsersEndpoint + "/" + id;
+
             //TODO: User data validation
+            HttpEntity<UserModel> reqEntity = new HttpEntity<>(updateUserData);
 
-            String url = usersEndpoint + "/" + id;
+//            restTemplate.put(url, updateUserData, UserModel.class);
+            ResponseEntity<UserModel> jphRes = restTemplate.exchange(url, HttpMethod.PUT, reqEntity,UserModel.class);
 
-            UserModel res = restTemplate.patchForObject(url, updateUserData, UserModel.class);
-
-            return ResponseEntity.ok(res);
+            return ResponseEntity.ok(jphRes.getBody());
 
         } catch (NumberFormatException e) {
             return ResponseEntity.status(400).body("ID " + id + ", is not a valid ID. Must be a whole number");
@@ -141,7 +138,5 @@ public class UserController {
             System.out.println(e.getMessage());
             return ResponseEntity.internalServerError().body(e.getMessage());
         }
-
     }
-
 }
