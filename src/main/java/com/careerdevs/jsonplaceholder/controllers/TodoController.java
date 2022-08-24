@@ -1,8 +1,6 @@
 package com.careerdevs.jsonplaceholder.controllers;
 
-import com.careerdevs.jsonplaceholder.models.PostModel;
 import com.careerdevs.jsonplaceholder.models.TodoModel;
-import com.careerdevs.jsonplaceholder.models.UserModel;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpMethod;
 import org.springframework.http.ResponseEntity;

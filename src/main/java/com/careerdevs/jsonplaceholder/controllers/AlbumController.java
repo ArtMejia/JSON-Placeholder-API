@@ -1,8 +1,6 @@
 package com.careerdevs.jsonplaceholder.controllers;
 
 import com.careerdevs.jsonplaceholder.models.AlbumModel;
-import com.careerdevs.jsonplaceholder.models.PostModel;
-import com.careerdevs.jsonplaceholder.models.UserModel;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpMethod;
 import org.springframework.http.ResponseEntity;
@@ -99,7 +97,7 @@ public class AlbumController {
 
             //TODO: User data validation
 
-            PostModel createdAlbum = restTemplate.postForObject(albumsEndPoint, newAlbum, PostModel.class);
+            AlbumModel createdAlbum = restTemplate.postForObject(albumsEndPoint, newAlbum, AlbumModel.class);
 
             return ResponseEntity.ok(createdAlbum);
 

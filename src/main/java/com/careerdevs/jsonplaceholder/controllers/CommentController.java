@@ -1,8 +1,6 @@
 package com.careerdevs.jsonplaceholder.controllers;
 
 import com.careerdevs.jsonplaceholder.models.CommentModel;
-import com.careerdevs.jsonplaceholder.models.PostModel;
-import com.careerdevs.jsonplaceholder.models.UserModel;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpMethod;
 import org.springframework.http.ResponseEntity;
@@ -99,7 +97,7 @@ public class CommentController {
 
             //TODO: User data validation
 
-            PostModel createdComment = restTemplate.postForObject(commentEndPoint, newComment, PostModel.class);
+            CommentModel createdComment = restTemplate.postForObject(commentEndPoint, newComment, CommentModel.class);
 
             return ResponseEntity.ok(createdComment);
 

@@ -1,8 +1,6 @@
 package com.careerdevs.jsonplaceholder.controllers;
 
 import com.careerdevs.jsonplaceholder.models.PhotoModel;
-import com.careerdevs.jsonplaceholder.models.PostModel;
-import com.careerdevs.jsonplaceholder.models.UserModel;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpMethod;
 import org.springframework.http.ResponseEntity;
@@ -74,7 +72,7 @@ public class PhotoController {
 
             String url = photosEndPoint + "/" + id;
 
-            restTemplate.getForObject(url, PostModel.class);
+            restTemplate.getForObject(url, PhotoModel.class);
 
             restTemplate.delete(url);
 

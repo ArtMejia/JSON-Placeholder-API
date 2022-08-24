@@ -1,7 +1,6 @@
 package com.careerdevs.jsonplaceholder.controllers;
 
 import com.careerdevs.jsonplaceholder.models.PostModel;
-import com.careerdevs.jsonplaceholder.models.UserModel;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpMethod;
 import org.springframework.http.ResponseEntity;
@@ -93,7 +92,7 @@ public class PostController {
 
     // POST localhost:8080/api/posts
     @PostMapping("/")
-    public ResponseEntity<?> createNewPost (RestTemplate restTemplate, @RequestBody UserModel newPost) {
+    public ResponseEntity<?> createNewPost (RestTemplate restTemplate, @RequestBody PostModel newPost) {
         try {
 
             //TODO: User data validation
